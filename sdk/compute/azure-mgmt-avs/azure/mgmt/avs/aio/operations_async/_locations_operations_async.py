@@ -9,11 +9,11 @@ import uuid
 from msrest.pipeline import ClientRawResponse
 from msrestazure.azure_exceptions import CloudError
 
-from .. import models
+from ... import models
 
 
-class LocationsOperations(object):
-    """LocationsOperations operations.
+class LocationsOperations:
+    """LocationsOperations async operations.
 
     You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
 
@@ -26,7 +26,7 @@ class LocationsOperations(object):
 
     models = models
 
-    def __init__(self, client, config, serializer, deserializer):
+    def __init__(self, client, config, serializer, deserializer) -> None:
 
         self._client = client
         self._serialize = serializer
@@ -35,8 +35,8 @@ class LocationsOperations(object):
 
         self.config = config
 
-    def check_trial_availability(
-            self, location, custom_headers=None, raw=False, **operation_config):
+    async def check_trial_availability(
+            self, location, *, custom_headers=None, raw=False, **operation_config):
         """Return trial status for subscription by region.
 
         :param location: Azure region
@@ -75,7 +75,7 @@ class LocationsOperations(object):
 
         # Construct and send request
         request = self._client.post(url, query_parameters, header_parameters)
-        response = self._client.send(request, stream=False, **operation_config)
+        response = await self._client.async_send(request, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             exp = CloudError(response)
@@ -93,8 +93,8 @@ class LocationsOperations(object):
         return deserialized
     check_trial_availability.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkTrialAvailability'}
 
-    def check_quota_availability(
-            self, location, custom_headers=None, raw=False, **operation_config):
+    async def check_quota_availability(
+            self, location, *, custom_headers=None, raw=False, **operation_config):
         """Return quota for subscription by region.
 
         :param location: Azure region
@@ -133,7 +133,7 @@ class LocationsOperations(object):
 
         # Construct and send request
         request = self._client.post(url, query_parameters, header_parameters)
-        response = self._client.send(request, stream=False, **operation_config)
+        response = await self._client.async_send(request, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             exp = CloudError(response)

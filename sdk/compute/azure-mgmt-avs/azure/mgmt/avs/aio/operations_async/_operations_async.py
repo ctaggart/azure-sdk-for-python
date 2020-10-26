@@ -9,11 +9,11 @@ import uuid
 from msrest.pipeline import ClientRawResponse
 from msrestazure.azure_exceptions import CloudError
 
-from .. import models
+from ... import models
 
 
-class Operations(object):
-    """Operations operations.
+class Operations:
+    """Operations async operations.
 
     You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
 
@@ -26,7 +26,7 @@ class Operations(object):
 
     models = models
 
-    def __init__(self, client, config, serializer, deserializer):
+    def __init__(self, client, config, serializer, deserializer) -> None:
 
         self._client = client
         self._serialize = serializer
@@ -36,7 +36,7 @@ class Operations(object):
         self.config = config
 
     def list(
-            self, custom_headers=None, raw=False, **operation_config):
+            self, *, custom_headers=None, raw=False, **operation_config):
         """Lists all of the available operations.
 
         :param dict custom_headers: headers that will be added to the request
@@ -88,11 +88,24 @@ class Operations(object):
 
             return response
 
+        async def internal_paging_async(next_link=None):
+            request = prepare_request(next_link)
+
+            response = await self._client.async_send(request, stream=False, **operation_config)
+
+            if response.status_code not in [200]:
+                exp = CloudError(response)
+                exp.request_id = response.headers.get('x-ms-request-id')
+                raise exp
+
+            return response
+
         # Deserialize response
         header_dict = None
         if raw:
             header_dict = {}
-        deserialized = models.OperationPaged(internal_paging, self._deserialize.dependencies, header_dict)
+        deserialized = models.OperationPaged(
+            internal_paging, self._deserialize.dependencies, header_dict, async_command=internal_paging_async)
 
         return deserialized
     list.metadata = {'url': '/providers/Microsoft.AVS/operations'}

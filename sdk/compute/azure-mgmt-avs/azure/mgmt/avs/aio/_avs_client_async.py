@@ -5,20 +5,20 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from msrest.service_client import SDKClient
+from msrest.async_client import SDKClientAsync
 from msrest import Serializer, Deserializer
 
-from ._configuration import AVSClientConfiguration
-from .operations import Operations
-from .operations import LocationsOperations
-from .operations import PrivateCloudsOperations
-from .operations import ClustersOperations
-from .operations import HcxEnterpriseSitesOperations
-from .operations import AuthorizationsOperations
-from . import models
+from .._configuration import AVSClientConfiguration
+from .operations_async import Operations
+from .operations_async import LocationsOperations
+from .operations_async import PrivateCloudsOperations
+from .operations_async import ClustersOperations
+from .operations_async import HcxEnterpriseSitesOperations
+from .operations_async import AuthorizationsOperations
+from .. import models
 
 
-class AVSClient(SDKClient):
+class AVSClient(SDKClientAsync):
     """Azure VMware Solution API
 
     :ivar config: Configuration for client.
@@ -49,7 +49,7 @@ class AVSClient(SDKClient):
             self, credentials, subscription_id, base_url=None):
 
         self.config = AVSClientConfiguration(credentials, subscription_id, base_url)
-        super(AVSClient, self).__init__(self.config.credentials, self.config)
+        super(AVSClient, self).__init__(self.config)
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
         self.api_version = '2020-03-20'
