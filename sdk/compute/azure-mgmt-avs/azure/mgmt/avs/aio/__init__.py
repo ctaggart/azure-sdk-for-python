@@ -5,11 +5,5 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from ._configuration import AVSClientConfiguration
-from ._avs_client import AVSClient
-__all__ = ['AVSClient', 'AVSClientConfiguration']
-
-from .version import VERSION
-
-__version__ = VERSION
-
+from ._avs_client_async import AVSClient
+__all__ = ['AVSClient']

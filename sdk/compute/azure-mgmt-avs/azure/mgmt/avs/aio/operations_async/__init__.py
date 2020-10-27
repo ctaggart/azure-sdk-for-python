@@ -5,12 +5,12 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from ._operations import Operations
-from ._locations_operations import LocationsOperations
-from ._private_clouds_operations import PrivateCloudsOperations
-from ._clusters_operations import ClustersOperations
-from ._hcx_enterprise_sites_operations import HcxEnterpriseSitesOperations
-from ._authorizations_operations import AuthorizationsOperations
+from ._operations_async import Operations
+from ._locations_operations_async import LocationsOperations
+from ._private_clouds_operations_async import PrivateCloudsOperations
+from ._clusters_operations_async import ClustersOperations
+from ._hcx_enterprise_sites_operations_async import HcxEnterpriseSitesOperations
+from ._authorizations_operations_async import AuthorizationsOperations
 
 __all__ = [
     'Operations',
